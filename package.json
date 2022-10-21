@@ -1,11 +1,14 @@
 {
   "name": "character-naming-contest",
-  "version": "1.0.0",
-  "description": "A simple character naming API that lists comments under Images and retrieves and displays all comments for an image.",
-  "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/bin/www"
   },
-  "author": "Haydn Meyburgh",
-  "license": "ISC"
+  "dependencies": {
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
+  }
 }
