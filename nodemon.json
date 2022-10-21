@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "package.json",
+    "nodemon.json",
+    ".eslingrc.json",
+    ".prettierrc",
+    "server/"
+  ],
+  "verbose": true,
+  "ignore": ["*.test.js", "*.spec.js"]
+}
