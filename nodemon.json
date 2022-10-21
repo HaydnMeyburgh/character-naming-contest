@@ -2,8 +2,6 @@
   "watch": [
     "package.json",
     "nodemon.json",
-    ".eslingrc.json",
-    ".prettierrc",
     "server/"
   ],
   "verbose": true,
