@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 const namesRouter = express.Router();
 
 namesRouter.put("/:characterId/name/:nameId", updateName);

@@ -1,11 +1,12 @@
-import express from "express";
+const express = require("express");
 const characterRouter = express.Router();
-import {
-  getAllCharacters,
+const {
+  getCharacters,
   getCharacterById,
-} from "../controllers/characters.controllers.js";
+} = require("../controllers/characters.controllers.js");
+const createName = require("../controllers/names.controllers.js");
 
-characterRouter.get("/", getAllCharacters);
+characterRouter.get("/", getCharacters);
 
 characterRouter.get("/:characterId", getCharacterById);
 
