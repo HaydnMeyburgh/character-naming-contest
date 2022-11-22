@@ -1,20 +1,19 @@
-import express from "express";
+const express = require("express");
 const app = express();
 
-import * as dotenv from "dotenv";
-dotenv.config();
+require(dotenv.config());
 
-import bodyParser from "body-parser";
+const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-import morgan from "morgan";
+const morgan = require("morgan");
 app.use(morgan("dev"));
 
-import characterRouter from "./server/routes/characters";
+const characterRouter = require("./server/routes/characters");
 app.use("/api/characters", characterRouter);
 
-import namesRouter from "./server/routes/names";
-app.use("/api/names", namesRouter);
+const namesRouter = require("./server/routes/names");
+app.use("/api/name", namesRouter);
 
 app.get("/", (req, res) => {
   try {
