@@ -2,7 +2,7 @@ const express = require("express");
 const characterRouter = express.Router();
 const {
   getCharacters,
-  getCharacterById,
+  getCharacterById
 } = require("../controllers/characters.controllers.js");
 const createName = require("../controllers/names.controllers.js");
 
