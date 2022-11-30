@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 
-require(dotenv.config());
+const env = require("dotenv");
+env.config();
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -9,10 +10,10 @@ app.use(bodyParser.json());
 const morgan = require("morgan");
 app.use(morgan("dev"));
 
-const characterRouter = require("./server/routes/characters");
+const characterRouter = require("./routes/characters");
 app.use("/api/characters", characterRouter);
 
-const namesRouter = require("./server/routes/names");
+const namesRouter = require("./routes/names");
 app.use("/api/name", namesRouter);
 
 app.get("/", (req, res) => {
