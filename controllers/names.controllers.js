@@ -52,7 +52,6 @@ const deleteName = async (req, res) => {
 };
 
 module.exports = {
-  updateName,
   deleteName,
   createName,
 };
