@@ -1,20 +1,23 @@
 const express = require("express");
 const app = express();
-
 const env = require("dotenv");
 env.config();
-
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const characterRouter = require("./routes/characters");
+const namesRouter = require("./routes/names");
+const PORT = process.env.DEV_PORT || 3000;
+const usersRouter = require("./routes/user");
+
 app.use(bodyParser.json());
 
-const morgan = require("morgan");
 app.use(morgan("dev"));
 
-const characterRouter = require("./routes/characters");
 app.use("/api/characters", characterRouter);
 
-const namesRouter = require("./routes/names");
 app.use("/api/name", namesRouter);
+
+app.use("/api/auth", usersRouter);
 
 app.get("/", (req, res) => {
   try {
@@ -28,7 +31,6 @@ app.get("/", (req, res) => {
   }
 });
 
-const PORT = process.env.DEV_PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
