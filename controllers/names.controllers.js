@@ -3,11 +3,13 @@ const Characters = require("../models").Characters;
 const createName = async (req, res) => {
   const { characterId } = req.params;
   const { name } = req.body;
+  const { userId } = req.auth;
   try {
+    // I need to attach user id to the character name created
     const newCharacterName = await Characters.create({
       character_names: name,
       ImageId: characterId,
-      userId: 1,
+      userId: userId,
     });
     if (!newCharacterName) {
       return res.status(404).send({
@@ -24,35 +26,7 @@ const createName = async (req, res) => {
     });
   }
 };
-
-const updateName = async (req, res) => {
-  const { nameId } = req.params;
-  const { name } = req.body;
-  try {
-    const updatedCharacterName = await Characters.update(
-      { character_names: name },
-      {
-        where: {
-          id: nameId,
-        },
-      }
-    );
-    if (!updatedCharacterName) {
-      return res.status(404).send({
-        message: "Character name change could not be updated",
-      });
-    }
-    res.status(200).send({
-      status: "Success",
-      message: "Successfully updated your character name",
-    });
-  } catch (err) {
-    return res.status(500).send({
-      error: err.message,
-    });
-  }
-};
-
+// Need to implement authorization for deletion of character name
 const deleteName = async (req, res) => {
   const { nameId } = req.params;
   try {
