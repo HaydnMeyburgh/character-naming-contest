@@ -1,6 +1,6 @@
 const Users = require("../models").Users;
 
-const checkDuplicateUsernameOrEmail = async (req, res, next) => {
+const verifySignup = async (req, res, next) => {
   const { username, email } = req.body;
   try {
     let user = await Users.findOne({
@@ -36,4 +36,4 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   }
 };
 
-module.exports = checkDuplicateUsernameOrEmail;
+module.exports = verifySignup;
