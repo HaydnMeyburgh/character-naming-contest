@@ -3,9 +3,9 @@ const Characters = require("../models").Characters;
 const createName = async (req, res) => {
   const { characterId } = req.params;
   const { name } = req.body;
-  const { userId } = req.auth;
+  const { userId } = req.userId;
   try {
-    // I need to attach user id to the character name created
+    //attach user id to the character name created
     const newCharacterName = await Characters.create({
       character_names: name,
       ImageId: characterId,
@@ -35,13 +35,7 @@ const deleteName = async (req, res) => {
         id: nameId,
       },
     });
-    if (!deletedName) {
-      return res.status(404).send({
-        message: "Character name could not be deleted",
-      });
-    }
     res.status(200).send({
-      status: "Success",
       message: "Deleted character name",
     });
   } catch (err) {
