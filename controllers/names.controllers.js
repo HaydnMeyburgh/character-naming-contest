@@ -30,7 +30,7 @@ const createName = async (req, res) => {
 const deleteName = async (req, res) => {
   const { nameId } = req.params;
   try {
-    const deletedName = await Characters.destroy({
+    await Characters.destroy({
       where: {
         id: nameId,
       },
