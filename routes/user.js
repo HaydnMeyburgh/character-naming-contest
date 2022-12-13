@@ -5,12 +5,17 @@ const {
   logoutUser,
   signUp,
 } = require("../controllers/users.controllers");
-const auth = require("../middleware/auth");
+const verifySignup = require("../middleware/verifySignUp");
 
-usersRouter.post("/register", signUp);
+usersRouter.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+  next();
+});
 
-usersRouter.post("/login", auth, loginUser);
+usersRouter.post("/signup", verifySignup, signUp);
 
-usersRouter.delete("/logout", logoutUser);
+usersRouter.post("/login", loginUser);
+
+usersRouter.post("/logout", logoutUser);
 
 module.exports = usersRouter;
