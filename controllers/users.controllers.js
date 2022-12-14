@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
     // Checking to see if user exists
     const user = await Users.findOne({
       where: {
-        username: username,
+        email: email,
       },
     });
     if (!user) {
