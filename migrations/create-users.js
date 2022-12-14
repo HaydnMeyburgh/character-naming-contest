@@ -37,6 +37,14 @@ module.exports = {
           is: /^[0-9a-f]{64}$/i,
         },
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
