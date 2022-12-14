@@ -53,9 +53,6 @@ const loginUser = async (req, res) => {
     req.session.token = token;
     res.status(202).send({
       message: "Successfully Logged in",
-      id: user.id,
-      username: username,
-      email: email,
     });
   } catch (err) {
     return res.status(500).send({
