@@ -3,13 +3,12 @@ const Characters = require("../models").Characters;
 const createName = async (req, res) => {
   const { characterId } = req.params;
   const { name } = req.body;
-  const { userId } = req.userId;
   try {
     //attach user id to the character name created
     const newCharacterName = await Characters.create({
       character_names: name,
       ImageId: characterId,
-      userId: userId,
+      UserId: req.userId,
     });
     if (!newCharacterName) {
       return res.status(404).send({
@@ -19,6 +18,7 @@ const createName = async (req, res) => {
     res.status(201).send({
       status: "Success",
       message: "Character name added successfully",
+      chara: newCharacterName,
     });
   } catch (err) {
     return res.status(500).send({
@@ -29,13 +29,25 @@ const createName = async (req, res) => {
 // Need to implement authorization for deletion of character name
 const deleteName = async (req, res) => {
   const { nameId } = req.params;
+  const deleteName = await Characters.findOne({
+    attributes: ["UserId"],
+    where: {
+      id: nameId,
+    },
+  });
+  
   try {
+    if (deleteName.UserId !== req.userId) {
+      return res.status(401).send({
+        message: "You cannot delete that name",
+      });
+    }
     await Characters.destroy({
       where: {
         id: nameId,
       },
     });
-    res.status(200).send({
+    return res.status(200).send({
       message: "Deleted character name",
     });
   } catch (err) {
