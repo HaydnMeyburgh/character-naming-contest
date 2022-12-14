@@ -5,16 +5,6 @@ const verifySignup = async (req, res, next) => {
   try {
     let user = await Users.findOne({
       where: {
-        username: username,
-      },
-    });
-    if (user) {
-      return res.status(400).send({
-        message: "Failed! Username is already in use",
-      });
-    }
-    user = await Users.findOne({
-      where: {
         email: email,
       },
     });
@@ -31,7 +21,7 @@ const verifySignup = async (req, res, next) => {
     next();
   } catch (err) {
     return res.status(500).send({
-      message: "unable to validate Username or email!",
+      message: err.message,
     });
   }
 };
