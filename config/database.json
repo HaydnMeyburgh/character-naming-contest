@@ -8,7 +8,7 @@
     "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "PROD_DB_USERNAME",
+    "use_env_variable": "PROD_DB_URL",
     "dialect": "postgres"
   }
 }
