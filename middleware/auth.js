@@ -1,12 +1,11 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const Users = require("../models").Users;
 
 const auth = (req, res, next) => {
   let token = req.session.token;
   if (!token) {
     return res.status(403).send({
-      message: "No token provided",
+      message: "You must be logged in to do this",
     });
   }
   jwt.verify(token, process.env.JWTSECRET, (err, decoded) => {
