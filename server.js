@@ -7,7 +7,7 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const characterRouter = require("./routes/characters");
 const namesRouter = require("./routes/names");
-const PORT = process.env.DEV_PORT || 3000;
+const PORT = process.env.PROD_PORT || 3000;
 const usersRouter = require("./routes/user");
 
 app.use(bodyParser.json());
