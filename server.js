@@ -9,6 +9,8 @@ const characterRouter = require("./routes/characters");
 const namesRouter = require("./routes/names");
 const PORT = process.env.PROD_PORT || 3000;
 const usersRouter = require("./routes/user");
+const swaggerUI = require("swagger-ui-express");
+const specs = require("./doc/swaggerDoc");
 
 app.use(bodyParser.json());
 
@@ -25,6 +27,8 @@ app.use(
 );
 
 app.use(morgan("dev"));
+
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use("/api/characters", characterRouter);
 
