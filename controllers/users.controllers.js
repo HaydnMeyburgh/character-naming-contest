@@ -16,7 +16,7 @@ const signUp = async (req, res) => {
       password: bcrypt.hashSync(password, saltRounds),
     });
     if (newUser) {
-      return res.status(201).send({
+      return res.status(200).send({
         message: "User registered successfully!",
       });
     }
@@ -43,7 +43,7 @@ const loginUser = async (req, res) => {
     }
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
-      return res.status(401).send({
+      return res.status(400).send({
         message: "Incorrect Password",
       });
     }
@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
       expiresIn: 86400,
     });
     req.session.token = token;
-    res.status(202).send({
+    res.status(200).send({
       message: "Successfully Logged in",
     });
   } catch (err) {
