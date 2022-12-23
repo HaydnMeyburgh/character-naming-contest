@@ -26,7 +26,48 @@ const createName = async (req, res) => {
     });
   }
 };
-// Need to implement authorization for deletion of character name
+
+// Update name
+const updateName = async (req, res) => {
+  const { nameId } = req.params;
+  const { name } = req.body;
+  const findName = await Characters.findOne({
+    where: {
+      id: nameId,
+    },
+  });
+  try {
+    if (findName.UserId !== req.userId) {
+      return res.status(401).send({
+        message: "You are not authorised to udpate that name",
+      });
+    }
+    if (name === "") {
+      return res.status(400).send({
+        message: "name cannot be left blank",
+      });
+    }
+    const updateName = await Characters.update(
+      {
+        character_names: name,
+      },
+      {
+        where: {
+          id: nameId,
+        },
+      }
+    );
+    return res.status(200).send({
+      message: "Character Name updated successfully",
+      data: updateName.character_names,
+    });
+  } catch (err) {
+    return res.status(500).send({
+      meesage: err.message,
+    });
+  }
+};
+
 const deleteName = async (req, res) => {
   const { nameId } = req.params;
   const deleteName = await Characters.findOne({
@@ -35,7 +76,6 @@ const deleteName = async (req, res) => {
       id: nameId,
     },
   });
-  
   try {
     if (deleteName.UserId !== req.userId) {
       return res.status(401).send({
@@ -60,4 +100,5 @@ const deleteName = async (req, res) => {
 module.exports = {
   deleteName,
   createName,
+  updateName,
 };
