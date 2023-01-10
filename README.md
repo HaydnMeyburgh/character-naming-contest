@@ -9,7 +9,7 @@ This REST API is for a Character Naming Competition built with Node & Express wh
 - Javascript
 - NodeJS
 - Express.js
-- PostgreSQL Server
+- PostgreSQL
 - Sequelize ORM
 
 --
