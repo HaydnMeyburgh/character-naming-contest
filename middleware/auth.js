@@ -2,7 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
-  let token = req.session.token;
+  const token = req.cookies.auth_cookie;
   if (!token) {
     return res.status(403).send({
       message: "You must be logged in to do this",
