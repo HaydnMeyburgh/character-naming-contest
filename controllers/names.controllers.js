@@ -18,7 +18,7 @@ const createName = async (req, res) => {
     res.status(201).send({
       status: "Success",
       message: "Character name added successfully",
-      chara: newCharacterName,
+      character: newCharacterName,
     });
   } catch (err) {
     return res.status(500).send({
