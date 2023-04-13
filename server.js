@@ -4,7 +4,7 @@ const env = require("dotenv").config();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
-const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const characterRouter = require("./routes/characters");
 const namesRouter = require("./routes/names");
 const PORT = process.env.PROD_PORT || 3000;
@@ -18,13 +18,7 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cookieSession({
-    name: "character-name-session",
-    secret: process.env.COOKIESECRET,
-    httpOnly: true,
-  })
-);
+app.use(cookieParser());
 
 app.use(morgan("dev"));
 
