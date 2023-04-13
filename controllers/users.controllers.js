@@ -28,7 +28,7 @@ const signUp = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { username, password, email } = req.body;
+  const { password, email } = req.body;
   try {
     // Checking to see if user exists
     const user = await Users.findOne({
@@ -50,8 +50,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
       expiresIn: 86400,
     });
-    req.session.token = token;
-    res.status(200).send({
+    res.cookie("auth_cookie", token, {httpOnly: true}).status(200).send({
       message: "Successfully Logged in",
     });
   } catch (err) {
@@ -63,9 +62,8 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
   try {
-    req.session = null;
-    return res.status(200).send({
-      mesage: "You've been signed out!",
+    return res.clearCookie("auth_cookie").status(200).send({
+      message: "You've been signed out!",
     });
   } catch (err) {
     this.next(err);
