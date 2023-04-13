@@ -22,6 +22,7 @@ const getCharacters = async (req, res) => {
   }
 };
 
+// Returns the character image and the corresponding user names posted for that image.
 const getCharacterById = async (req, res) => {
   const { characterId } = req.params;
   try {
