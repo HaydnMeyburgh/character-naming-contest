@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
       expiresIn: 86400,
     });
-    res.cookie("auth_cookie", token, {httpOnly: true}).status(200).send({
+    res.cookie("auth_cookie", token, { httpOnly: true }).status(200).send({
       message: "Successfully Logged in",
     });
   } catch (err) {
