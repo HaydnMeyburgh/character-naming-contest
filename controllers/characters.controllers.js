@@ -2,6 +2,7 @@ const Character_Images = require("../models").Character_Images;
 const Characters = require("../models").Characters;
 const Votes = require("../models").Votes;
 const NodeCache = require("node-cache");
+const { Sequelize } = require("../models");
 
 const myCache = new NodeCache({
   stdTTL: 300,
@@ -36,35 +37,54 @@ const getCharacters = async (req, res) => {
 const getCharacterById = async (req, res) => {
   const { characterId } = req.params;
   try {
-    const characterImage = await Character_Images.findAll({
+    const characterImage = await Character_Images.findOne({
       attributes: ["image_url", "id"],
       where: {
         id: characterId,
       },
     });
-    const allCharacterNames = await Characters.findAll({
-      attributes: ["character_names"],
+    const characterNames = await Characters.findAll({
       where: {
         ImageId: characterId,
       },
     });
-    const nameVotes = await Votes.count({
+    const characterNameIds = characterNames.map(
+      (characterName) => characterName.id
+    );
+    const voteCounts = await Votes.findAll({
+      attributes: [
+        "nameId",
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "voteCount"],
+      ],
       where: {
-        nameId: characterId
-      }
-    })
-    if (!(characterImage || allCharacterNames)) {
+        nameId: characterNameIds,
+      },
+      group: ["nameId"],
+    });
+    // This needs to be fixed, the vote count is not showing up
+    const characterNamesWithVoteCounts = characterNames.map((characterName) => {
+      const voteCount = voteCounts.find(
+        (voteCount) => voteCount.nameId === characterName.id
+      );
+      return {
+        id: characterName.id,
+        name: characterName.character_names,
+        voteCount: voteCount ? voteCount.voteCount : 0
+        
+      };
+    });
+    const characterInfo = {
+      characterImage,
+      characterNames: characterNamesWithVoteCounts,
+    };
+    if (!characterInfo) {
       return res.status(404).send({
         message: "That image could not be found",
       });
     }
-    if (!nameVotes) {
-      nameVotes = "No votes cast for this name yet"
-    }
     res.status(200).send({
-      image: characterImage,
-      names: allCharacterNames,
-      votes: nameVotes
+      characterImage,
+      characterNames: characterNamesWithVoteCounts,
     });
   } catch (err) {
     res.status(500).send({
