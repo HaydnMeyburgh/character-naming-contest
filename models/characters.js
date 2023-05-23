@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Characters.belongsTo(models.Character_Images, { foreignKey: "ImageId" });
       Characters.belongsTo(models.Users, { foreignKey: "UserId" });
+      Characters.hasMany(models.Votes, {foreignKey: "nameId"})
     }
   }
   Characters.init(
