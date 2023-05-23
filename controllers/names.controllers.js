@@ -4,6 +4,18 @@ const createName = async (req, res) => {
   const { characterId } = req.params;
   const { name } = req.body;
   try {
+    // Edge case duplicate character names for a character
+    const findCharacter = await Characters.findOne({
+      where: {
+        character_names: name,
+        ImageId: characterId
+      },
+    });
+    if (findCharacter) {
+      return res.status(404).send({
+        message: "You cannot create a character name that already exists for this character",
+      });
+    }
     //attach user id to the character name created
     const newCharacterName = await Characters.create({
       character_names: name,
