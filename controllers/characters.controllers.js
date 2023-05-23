@@ -34,23 +34,37 @@ const getCharacters = async (req, res) => {
 };
 
 // Returns the character image and the corresponding user names posted for that image.
+/*
+*
+*
+*
+  TODO: I need to cache the response from this controller function as the initial load time is quite long
+*
+*
+*
+*
+  */
 const getCharacterById = async (req, res) => {
   const { characterId } = req.params;
   try {
+    // fetching Character Image
     const characterImage = await Character_Images.findOne({
       attributes: ["image_url", "id"],
       where: {
         id: characterId,
       },
     });
+    // fetching character names for Image
     const characterNames = await Characters.findAll({
       where: {
         ImageId: characterId,
       },
     });
+    // createing new array of just character ids
     const characterNameIds = characterNames.map(
       (characterName) => characterName.id
     );
+    //Fetching a count of the number of rows where nameId is the same as a character id from the array above
     const voteCounts = await Votes.findAll({
       attributes: [
         "nameId",
@@ -61,7 +75,7 @@ const getCharacterById = async (req, res) => {
       },
       group: ["nameId"],
     });
-    // This needs to be fixed, the vote count is not showing up
+    // grouping character names with their vote count into an array of objects
     const characterNamesWithVoteCounts = characterNames.map((characterName) => {
       const voteCount = voteCounts.find(
         (voteCount) => voteCount.nameId === characterName.id
@@ -69,8 +83,8 @@ const getCharacterById = async (req, res) => {
       return {
         id: characterName.id,
         name: characterName.character_names,
-        voteCount: voteCount ? voteCount.voteCount : 0
-        
+        // Using sequelize .get() method to get the actual value of the "voteCount" attribute 
+        voteCount: voteCount ? voteCount.get("voteCount") : 0,
       };
     });
     const characterInfo = {
