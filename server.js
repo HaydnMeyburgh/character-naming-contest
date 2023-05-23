@@ -11,6 +11,7 @@ const PORT = process.env.PROD_PORT || 3000;
 const usersRouter = require("./routes/user");
 const swaggerUI = require("swagger-ui-express");
 const specs = require("./doc/swaggerDoc");
+const voteRouter = require("./routes/votes");
 
 app.use(bodyParser.json());
 
@@ -29,6 +30,8 @@ app.use("/api/characters", characterRouter);
 app.use("/api/name", namesRouter);
 
 app.use("/api/auth", usersRouter);
+
+app.use("/api/vote", voteRouter);
 
 app.get("/", (req, res) => {
   try {
