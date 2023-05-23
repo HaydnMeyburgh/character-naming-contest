@@ -1,5 +1,6 @@
 const Character_Images = require("../models").Character_Images;
 const Characters = require("../models").Characters;
+const Votes = require("../models").Votes;
 const NodeCache = require("node-cache");
 
 const myCache = new NodeCache({
@@ -47,14 +48,23 @@ const getCharacterById = async (req, res) => {
         ImageId: characterId,
       },
     });
+    const nameVotes = await Votes.count({
+      where: {
+        nameId: characterId
+      }
+    })
     if (!(characterImage || allCharacterNames)) {
       return res.status(404).send({
         message: "That image could not be found",
       });
     }
+    if (!nameVotes) {
+      nameVotes = "No votes cast for this name yet"
+    }
     res.status(200).send({
       image: characterImage,
       names: allCharacterNames,
+      votes: nameVotes
     });
   } catch (err) {
     res.status(500).send({
