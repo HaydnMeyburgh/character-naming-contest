@@ -78,7 +78,7 @@ const deleteName = async (req, res) => {
   });
   try {
     if (deleteName.UserId !== req.userId) {
-      return res.status(401).send({
+      return res.status(403).send({
         message: "You cannot delete that name",
       });
     }
