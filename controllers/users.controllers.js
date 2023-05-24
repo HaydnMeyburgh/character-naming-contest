@@ -70,8 +70,52 @@ const logoutUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  const { userId } = req;
+  const { username, password } = req.body;
+
+  if (password) {
+    try {
+      Users.update(
+        { password: bcrypt.hashSync(password, saltRounds), username },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send({
+        message: "User updated successfully",
+      });
+    } catch (err) {
+      return res.status(500).send({
+        error: err.message,
+      });
+    }
+  } else {
+    try {
+      Users.update(
+        { username },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send({
+        message: "User updated successfully",
+      });
+    } catch (err) {
+      return res.status(500).send({
+        error: err.message,
+      });
+    }
+  }
+};
+
 module.exports = {
   signUp,
   loginUser,
   logoutUser,
+  updateUser,
 };
