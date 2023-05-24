@@ -4,7 +4,7 @@ const {
   loginUser,
   logoutUser,
   signUp,
-  updateUser
+  updateUser,
 } = require("../controllers/users.controllers");
 const verifySignup = require("../middleware/verifySignUp");
 const auth = require("../middleware/auth");
@@ -18,10 +18,12 @@ usersRouter.use(function (req, res, next) {
  * tags:
  *  - name: user
  *    description: user API
- *  - name: names
+ *  - name: character names
  *    description: The character photo names API
  *  - name: character photos
  *    description: The character photos API
+ *  - name: vote
+ *    description: The vote api
  * */
 
 /**
@@ -29,12 +31,10 @@ usersRouter.use(function (req, res, next) {
  * /api/auth/signup:
  *    post:
  *      summary: Creates a new user
- *      produces:
- *        - application/json
  *      tags:
  *        - user
  *      requestBody:
- *        description: required data for new user
+ *        description: required data for new user registration
  *        required: true
  *        content:
  *          application/json:
@@ -42,13 +42,19 @@ usersRouter.use(function (req, res, next) {
  *              $ref: '#/components/schemas/User'
  *      responses:
  *        "200":
- *          description: User verified and registered successfully
+ *          description: User registered successfully
  *        "400":
  *          description: Email is already in use or Email and/or username is blank
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        "500":
- *          description: Server Error
- *          schema:
- *            $ref: '#/components/schemas/User'
+ *          description: Internal server error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 usersRouter.post("/signup", verifySignup, signUp);
 
@@ -83,12 +89,22 @@ usersRouter.post("/signup", verifySignup, signUp);
  *          description: User successfully logged in and JWT token created
  *        "400":
  *          description: Incorrect password
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        "404":
  *          description: "User not found"
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        "500":
  *          description: "Server error"
- *          schema:
- *            $ref: '#/components/schemas/User'
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 usersRouter.post("/login", loginUser);
 
@@ -97,19 +113,64 @@ usersRouter.post("/login", loginUser);
  * /api/auth/logout:
  *    post:
  *      summary: Logs out a user
- *      produces:
- *        - application/json
  *      tags:
  *        - user
  *      responses:
  *        "200":
  *          description: User successfully logged out
- *          schema:
- *            $ref: '#/components/schemas/User'
+ *        "500":
+ *          description: "Server error"
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 usersRouter.post("/logout", logoutUser);
 
-// update user credentials
+/**
+ * @swagger
+ * /api/auth/user:
+ *  put:
+ *    summary: Update a user
+ *    tags:
+ *      - user:
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      description: User data to update
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              username:
+ *                type: string
+ *              password:
+ *                type: string
+ *     responses:
+ *       "200":
+ *         description: User updated successfully
+ *       "400":
+ *         description: Invalid request parameters
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       "403":
+ *         description: Access forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       "500":
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *
+ */
 usersRouter.put("/user", auth, updateUser);
 
 module.exports = usersRouter;
