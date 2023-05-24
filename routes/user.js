@@ -4,8 +4,10 @@ const {
   loginUser,
   logoutUser,
   signUp,
+  updateUser
 } = require("../controllers/users.controllers");
 const verifySignup = require("../middleware/verifySignUp");
+const auth = require("../middleware/auth");
 
 usersRouter.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
@@ -106,5 +108,8 @@ usersRouter.post("/login", loginUser);
  *            $ref: '#/components/schemas/User'
  */
 usersRouter.post("/logout", logoutUser);
+
+// update user credentials
+usersRouter.put("/user", auth, updateUser);
 
 module.exports = usersRouter;
