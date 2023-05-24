@@ -1,36 +1,5 @@
 "use strict";
-/**
- * @swagger
- *  components:
- *    schemas:
- *      User:
- *        type: object
- *        required:
- *          - firstName
- *          - lastName
- *          - username
- *          - email
- *          - password
- *        properties:
- *          firstName:
- *            type: string
- *          lastName:
- *            type: string
- *          username:
- *            type: string
- *          email:
- *            type: string
- *            format: email
- *            description: Email for the user, must be unique
- *          password:
- *            type: string
- *        example:
- *           firstName: user
- *           lastName: person
- *           username: Test User
- *           email: testuser@test.com
- *           password: pole1232
- */
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {

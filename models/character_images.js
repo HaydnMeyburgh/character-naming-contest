@@ -1,22 +1,5 @@
 "use strict";
-/**
- * @swagger
- *  components:
- *    schemas:
- *      Character Photos:
- *        type: object
- *        properties:
- *          id:
- *            type: integer
- *          name:
- *            type: string
- *          image_url:
- *            type: string
- *        example:
- *           id: 7
- *           name: Character 1
- *           image_url: https://google.drive//123dsadwasdawasda
- */
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Character_Images extends Model {

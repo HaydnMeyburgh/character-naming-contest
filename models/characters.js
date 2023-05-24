@@ -1,18 +1,5 @@
 "use strict";
-/**
- * @swagger
- *  components:
- *    schemas:
- *      Character Name:
- *        type: object
- *        required:
- *          - name
- *        properties:
- *          name:
- *            type: string
- *        example:
- *           name: Egor Gargorof           
- */
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Characters extends Model {
