@@ -9,6 +9,22 @@ const options = {
       description:
         "A backend API where users can login and add/delete (Only when authorised) names associated to character photos.",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          in: "cookie", //Specifying that the token is sent via a cookie
+          name: "auth_cookie",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [], //Using the defined  security scheme for all endpoints.
+      },
+    ],
   },
   apis: [
     "./models/character_images.js",
@@ -19,16 +35,5 @@ const options = {
 };
 
 const specs = swagger(options);
-
-/**
- * @swagger
- * components:
- *    securitySchemes:
- *      ApiKeyAuth:
- *        type: apiKey
- *        in: header
- *        name: authorization
- *
- */
 
 module.exports = specs;
