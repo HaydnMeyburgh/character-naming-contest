@@ -15,7 +15,7 @@ const options = {
           type: "object",
           required: ["firstName", "lastName", "username", "email", "password"],
           properties: {
-            id : {
+            id: {
               type: "integer",
               description: "Auto generated id",
             },
@@ -90,14 +90,14 @@ const options = {
             },
             UserId: {
               type: "integer",
-              description: "The ID of the user who posted the name"
+              description: "The ID of the user who posted the name",
             },
           },
           example: {
             id: 1,
             character_names: "Egor Gargorof",
             ImageId: 7,
-            UserId: 2,  
+            UserId: 2,
           },
         },
         Vote: {
@@ -105,7 +105,7 @@ const options = {
           properties: {
             id: {
               type: "integer",
-              description: "Auto generated id"
+              description: "Auto generated id",
             },
             userId: {
               type: "integer",
@@ -129,9 +129,6 @@ const options = {
               type: "string",
               description: "The error message",
             },
-          },
-          example: {
-            message: err.message,
           },
         },
       },

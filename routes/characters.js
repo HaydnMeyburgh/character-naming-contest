@@ -56,7 +56,7 @@ characterRouter.get("/:characterId", getCharacterById);
  *      tags:
  *        - character photos
  *      security:
- *        - ApiKeyAuth: []
+ *        - bearerAuth: []
  *      requestBody:
  *        description: required data for creating name
  *        required: true

@@ -11,7 +11,7 @@ const auth = require("../middleware/auth");
  *      tags:
  *        - names
  *      security:
- *        - ApiKeyAuth: []
+ *        - bearerAuth: []
  *      requestBody:
  *        description: required data for updated name
  *        required: true
@@ -48,7 +48,7 @@ namesRouter.put("/:nameId", auth, updateName);
  *      tags:
  *        - names
  *      security:
- *        - ApiKeyAuth: []
+ *        - bearerAuth: []
  *      parameters:
  *      - in: path
  *        name: nameId

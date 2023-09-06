@@ -130,14 +130,14 @@ usersRouter.post("/logout", logoutUser);
 /**
  * @swagger
  * /api/auth/user:
- *  put:
- *    summary: Update a user
- *    tags:
- *      - user:
- *    security:
- *      - bearerAuth: []
- *    requestBody:
- *      description: User data to update
+ *    put:
+ *      summary: Update a user
+ *      tags:
+ *        - user:
+ *      security:
+ *        - bearerAuth: []
+ *      requestBody:
+ *        description: User data to update
  *      required: true
  *      content:
  *        application/json:
