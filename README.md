@@ -28,7 +28,7 @@ Welcome to the Character Naming Competition Backend project! This repository con
 
 ## Project Overview
 
-The Character Naming Competition Backend is the core of our character naming competition application. It handles user authentication, character image management, character name submissions, user voting, and more. This backend is built using Node.js, Express.js, and Sequelize ORM for managing the database.
+The Character Naming Competition project handles user authentication, character image management, character name submissions, user voting, and more. This backend is built using Node.js, Express.js, and Sequelize ORM for managing the database.
 
 ## Getting Started
 
