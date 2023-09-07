@@ -24,12 +24,7 @@ Welcome to the Character Naming Competition Backend project! This repository con
     - [Remove a Vote](#remove-a-vote)
   - [Authentication](#authentication)
 - [Database](#database)
-- [Testing](#testing)
-- [Deployment](#deployment)
 - [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Project Overview
 
@@ -221,6 +216,6 @@ The project uses PostgreSQL as the database. You can find the database schema in
 
 ### Documentation
 
-Explore the API documentation using Swagger UI. Access t at `/api/docs` after starting the server
+Explore the API documentation using Swagger UI. Access it at `/api/docs` after starting the server
 
 
